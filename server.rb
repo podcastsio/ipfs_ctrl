@@ -26,9 +26,12 @@ post '/archive' do
   p params[:episodes]
   puts '***'
 
-  # mkdir bucket
-  # ipfs get episodes
-  # hub buck init
-  # hub buck push
-  # hub buck archive
+  directory_path = "/data/podcasts/#{params[:bucket]}"
+
+  `mkdir #{directory_path}`
+  params[:episodes].each do |e|
+    puts e
+    `ipfs get #{e['cid']} -o #{directory_path}/#{e['filename']}`
+  end
+  return `cd #{directory_path} && hub buck init --name=#{params[:bucket]} --private=false --thread=#{params[:thread_id]} -q && hub buck push -y -f -q && hub buck archive -y`
 end
