@@ -11,6 +11,16 @@ post '/check' do
   return `cd /data/podcasts/#{params[:bucket]} && hub buck archive status`
 end
 
+post '/info' do
+  # check on filecoin bucket status
+  return `cd /data/podcasts/#{params[:bucket]} && hub buck archive info`
+end
+
+post '/show' do
+  # check powergate info for cid
+  return `hub pow show #{params[:cid]}`
+end
+
 post '/archive' do
   puts '***'
   p params[:episodes]
