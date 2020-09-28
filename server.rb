@@ -22,15 +22,11 @@ post '/show' do
 end
 
 post '/archive' do
-  puts '***'
-  p params[:episodes]
-  puts '***'
-
+  # push a list of episodes to textile bucket and enqueue archive to filecoin
   directory_path = "/data/podcasts/#{params[:bucket]}"
 
   `mkdir #{directory_path}`
   params[:episodes].each do |i, e|
-    puts e
     `ipfs get #{e['cid']} -o #{directory_path}/#{e['filename']}`
   end
   return `cd #{directory_path} && hub buck init --name=#{params[:bucket]} --private=false --thread=#{params[:thread_id]} -q && hub buck push -y -f -q && hub buck archive -y`
