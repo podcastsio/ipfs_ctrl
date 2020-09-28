@@ -29,7 +29,7 @@ post '/archive' do
   directory_path = "/data/podcasts/#{params[:bucket]}"
 
   `mkdir #{directory_path}`
-  params[:episodes].each do |e|
+  params[:episodes].each do |i, e|
     puts e
     `ipfs get #{e['cid']} -o #{directory_path}/#{e['filename']}`
   end
