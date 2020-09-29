@@ -31,3 +31,7 @@ post '/archive' do
   end
   return `cd #{directory_path} && hub buck init --name=#{params[:bucket]} --private=false --thread=#{params[:thread_id]} -q && hub buck push -y -f -q && hub buck archive -y`
 end
+
+post '/retry_archive' do
+  return `cd /data/podcasts/#{params[:bucket]} && hub buck archive -y`
+end
