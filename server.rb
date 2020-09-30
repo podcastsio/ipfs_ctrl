@@ -2,7 +2,8 @@ require 'sinatra'
 
 post '/download' do
   # download url and add to ipfs
-  cid = `wget -T 60 -q -O - #{params[:url]} | ipfs add -q`.chomp
+  cid = `wget -q -O /tmp/#{params[:filename]} #{params[:url]} && ipfs add /tmp/#{params[:filename]} -q`.chomp
+  `rm /tmp/#{params[:filename]}`
   return cid
 end
 
